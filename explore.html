@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Species — tAIatlas</title>
+  <meta name="description" content="Browse and search tAI values for 769 vertebrate species. Filter by taxonomic group, sort by codon weights, and visualize individual species profiles.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+  <style>
+    .detail-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .detail-stat {
+      background: rgba(0, 212, 255, 0.04);
+      border: 1px solid rgba(0, 212, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .detail-stat-label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .detail-stat-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+    .detail-stat-value small {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="tAIatlas home">
+        <span class="logo-icon">tAI</span>
+        <span>tAIatlas</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container">
+      <h1><span class="gradient-text">Species Explorer</span></h1>
+      <p>Search, filter, and visualize tAI profiles for 769 vertebrate species. Click any species to see its full 61-codon bar chart.</p>
+    </div>
+  </header>
+
+  <main class="section" style="padding-top: 0;">
+    <div class="container">
+
+      <!-- Controls -->
+      <div class="explorer-controls fade-in">
+        <div class="search-container">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input
+            type="text"
+            id="species-search"
+            class="search-input"
+            placeholder="Filter by species name..."
+            autocomplete="off"
+            aria-label="Filter species"
+          >
+          <div id="search-results" class="search-results" role="listbox" aria-label="Search suggestions"></div>
+        </div>
+        <select id="group-filter" class="filter-select" aria-label="Filter by taxonomic group">
+          <option value="">All Groups</option>
+        </select>
+        <span id="species-count" class="species-count"></span>
+      </div>
+
+      <!-- Loading -->
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        Loading species data...
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrapper glass-card fade-in" style="padding: 0; overflow: hidden;">
+        <div style="max-height: 600px; overflow-y: auto;">
+          <table class="data-table" aria-label="Species tAI data">
+            <thead>
+              <tr>
+                <th data-sort="species">Species <span class="sort-arrow">↕</span></th>
+                <th data-sort="group">Group <span class="sort-arrow">↕</span></th>
+                <th data-sort="mean_wi">Mean w<sub>i</sub> <span class="sort-arrow">↕</span></th>
+                <th data-sort="max_wi">Max w<sub>i</sub> <span class="sort-arrow">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="species-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Species Detail Panel -->
+      <div id="species-detail" class="species-detail glass-card">
+        <div class="species-detail-header">
+          <div>
+            <h2 style="font-style: italic;">Species Name</h2>
+            <span class="detail-group group-badge"></span>
+          </div>
+          <button id="close-detail" class="close-detail" aria-label="Close detail panel">✕ Close</button>
+        </div>
+
+        <div id="detail-stats" class="detail-stats-grid"></div>
+
+        <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-secondary);">
+          Codon w<sub>i</sub> Profile (61 sense codons)
+        </h3>
+        <div class="chart-container" id="codon-chart">
+          <!-- Chart rendered by JS -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">
+          © 2024–2025 tAIatlas Project. Open-access scientific resource.
+        </div>
+        <div class="footer-links">
+          <a href="about.html">Methodology</a>
+          <a href="download.html">Data</a>
+          <a href="https://github.com/taiatlas" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/explore.js"></script>
+</body>
+</html>

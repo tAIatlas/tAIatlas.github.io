@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methodology — tAIatlas</title>
+  <meta name="description" content="How tAIatlas computes tRNA Adaptation Index values: pipeline from NCBI RefSeq genomes to quality-filtered W_i values with GtRNAdb cross-validation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="tAIatlas home">
+        <span class="logo-icon">tAI</span>
+        <span>tAIatlas</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container">
+      <h1><span class="gradient-text">Methodology</span></h1>
+      <p>How we compute tRNA Adaptation Index values — from genome assembly to per-codon W<sub>i</sub> weights.</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- tAI Formula Section -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="methodology-grid">
+
+          <div class="glass-card fade-in">
+            <h2 style="margin-bottom: 20px;">The tAI <span class="gradient-text">Formula</span></h2>
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+              The tRNA Adaptation Index was first described by dos Reis, Savva & Wernisch (2004). It measures how well a gene's codon usage matches the tRNA pool, predicting translational efficiency.
+            </p>
+            <div class="formula-card" style="background: rgba(0, 212, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.08); border-radius: 12px; padding: 24px; margin-bottom: 20px;">
+              <div class="formula" style="border: none; background: none; padding: 12px 0; margin-bottom: 8px;">
+                w<sub>i</sub> = Σ<sub>j</sub> (1 − s<sub>ij</sub>) × tGCN<sub>ij</sub>
+              </div>
+              <div class="formula-label">Per-codon weight, summing over all tRNA isoacceptors</div>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8;">
+              Where <strong>s<sub>ij</sub></strong> is the wobble base-pairing penalty between codon <em>i</em> and anticodon <em>j</em>, and <strong>tGCN<sub>ij</sub></strong> is the tRNA gene copy number for anticodon <em>j</em>. The product <em>(1 − s<sub>ij</sub>) × tGCN<sub>ij</sub></em> captures both the abundance and pairing efficiency of each isoacceptor.
+            </p>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; margin-top: 12px;">
+              The final tAI of a gene is the <strong>geometric mean</strong> of the relative adaptiveness values (w<sub>i</sub> / max(w<sub>i</sub>)) across all its codons.
+            </p>
+          </div>
+
+          <div class="glass-card fade-in">
+            <h2 style="margin-bottom: 20px;">Wobble <span class="gradient-text">Base-Pairing</span></h2>
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+              Not all codon–anticodon interactions are equally efficient. The wobble position (3rd codon base ↔ 1st anticodon base) allows non-standard pairings:
+            </p>
+            <div style="overflow-x: auto;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Anticodon base</th>
+                    <th>Codon base</th>
+                    <th>Penalty (s<sub>ij</sub>)</th>
+                    <th>Interaction</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>A</code></td><td><code>U</code></td><td>0</td><td>Watson-Crick</td></tr>
+                  <tr><td><code>C</code></td><td><code>G</code></td><td>0</td><td>Watson-Crick</td></tr>
+                  <tr><td><code>G</code></td><td><code>C</code></td><td>0</td><td>Watson-Crick</td></tr>
+                  <tr><td><code>U</code></td><td><code>A</code></td><td>0</td><td>Watson-Crick</td></tr>
+                  <tr><td><code>G</code></td><td><code>U</code></td><td>0.41</td><td>Wobble G:U</td></tr>
+                  <tr><td><code>I</code></td><td><code>A, C, U</code></td><td>0.28</td><td>Inosine wobble</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
+              Penalty values from dos Reis et al. (2004). Inosine (I) results from adenosine-to-inosine editing at the anticodon wobble position.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pipeline Section -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Our <span class="gradient-text">Pipeline</span></h2>
+          <p>From genome assembly to per-codon tAI weights</p>
+        </div>
+
+        <div class="glass-card fade-in">
+          <div class="pipeline-steps">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Genome Retrieval</h4>
+                <p>Download RefSeq genome assemblies from NCBI for all available vertebrate species. We target chromosomal or scaffold-level assemblies for comprehensive tRNA gene detection.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>tRNA Gene Prediction</h4>
+                <p>Run tRNAscan-SE 2.0 on each genome assembly to predict tRNA gene locations, anticodon types, and quality scores. tRNAscan-SE uses covariance models and secondary structure analysis.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Quality Filtering</h4>
+                <p>Remove pseudogenes, low-confidence predictions (infernal score &lt; 50), and mitochondrial tRNAs. Only high-confidence nuclear tRNA genes are retained for W<sub>i</sub> computation.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Wobble Optimization</h4>
+                <p>Apply the dos Reis wobble base-pairing rules to compute W<sub>i</sub> values for each of the 61 sense codons. Each tRNA anticodon contributes to multiple codons through wobble interactions.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Cross-Validation</h4>
+                <p>Validate against the GtRNAdb database for species in common. Concordance between our NCBI-derived values and GtRNAdb confirms pipeline accuracy.</p>
+              </div>
+            </div>
+            <div class="step-card">
+              <div class="step-number">6</div>
+              <div class="step-content">
+                <h4>Database Integration</h4>
+                <p>Merge NCBI-derived and GtRNAdb datasets. For overlapping species, the curated GtRNAdb values take precedence. Final dataset: 769 species × 61 codons.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cross-Validation Section -->
+    <section class="section">
+      <div class="container">
+        <div class="methodology-grid">
+          <div class="glass-card fade-in">
+            <h2 style="margin-bottom: 20px;"><span class="gradient-text">Cross-Validation</span></h2>
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+              To verify our pipeline, we compared W<sub>i</sub> values for species present in both our NCBI-derived dataset and the GtRNAdb reference database.
+            </p>
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+              The <strong>Genomic tRNA Database (GtRNAdb)</strong> is the gold-standard resource for tRNA gene annotations, maintained by the Lowe Lab at UC Santa Cruz. It provides expertly curated tRNA gene predictions for model organisms.
+            </p>
+            <p style="color: var(--text-secondary);">
+              Our cross-validation shows strong concordance between the two sources for overlapping species, confirming that our automated NCBI RefSeq pipeline produces reliable W<sub>i</sub> values at scale.
+            </p>
+          </div>
+
+          <div class="glass-card fade-in">
+            <h2 style="margin-bottom: 20px;">Data <span class="gradient-text">Sources</span></h2>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="padding: 16px; border-radius: 12px; background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.08);">
+                <h4 style="margin-bottom: 4px;">NCBI RefSeq</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                  765 vertebrate genome assemblies.
+                  <br><a href="https://www.ncbi.nlm.nih.gov/refseq/" target="_blank" rel="noopener">ncbi.nlm.nih.gov/refseq</a>
+                </p>
+              </div>
+              <div style="padding: 16px; border-radius: 12px; background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.08);">
+                <h4 style="margin-bottom: 4px;">GtRNAdb</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                  61 curated model organisms.
+                  <br><a href="http://gtrnadb.ucsc.edu" target="_blank" rel="noopener">gtrnadb.ucsc.edu</a>
+                </p>
+              </div>
+              <div style="padding: 16px; border-radius: 12px; background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.08);">
+                <h4 style="margin-bottom: 4px;">tRNAscan-SE 2.0</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                  tRNA gene prediction engine.
+                  <br><a href="http://lowelab.ucsc.edu/tRNAscan-SE/" target="_blank" rel="noopener">lowelab.ucsc.edu/tRNAscan-SE</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- References Section -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Key <span class="gradient-text">References</span></h2>
+        </div>
+
+        <div class="glass-card fade-in">
+          <div class="citation-box">
+            <p class="citation-title">Original tAI Paper</p>
+            <p>
+              dos Reis, M., Savva, R., & Wernisch, L. (2004). Solving the riddle of codon usage preferences: a test for translational selection.
+              <em>Nucleic Acids Research</em>, 32(17), 5036–5044.
+              <a href="https://doi.org/10.1093/nar/gkh834" target="_blank" rel="noopener">doi:10.1093/nar/gkh834</a>
+            </p>
+          </div>
+
+          <div class="citation-box" style="margin-top: 16px;">
+            <p class="citation-title">stAI — Species-specific tAI</p>
+            <p>
+              Sabi, R., & Tuller, T. (2014). Modelling the efficiency of codon–tRNA interactions based on codon usage bias.
+              <em>DNA Research</em>, 21(5), 511–526.
+              <a href="https://doi.org/10.1093/dnares/dsu017" target="_blank" rel="noopener">doi:10.1093/dnares/dsu017</a>
+            </p>
+          </div>
+
+          <div class="citation-box" style="margin-top: 16px;">
+            <p class="citation-title">tRNAscan-SE 2.0</p>
+            <p>
+              Chan, P. P., & Lowe, T. M. (2019). tRNAscan-SE: searching for tRNA genes in genomic sequences.
+              <em>Methods in Molecular Biology</em>, 1962, 1–14.
+              <a href="https://doi.org/10.1007/978-1-4939-9173-0_1" target="_blank" rel="noopener">doi:10.1007/978-1-4939-9173-0_1</a>
+            </p>
+          </div>
+
+          <div class="citation-box" style="margin-top: 16px;">
+            <p class="citation-title">GtRNAdb</p>
+            <p>
+              Chan, P. P., & Lowe, T. M. (2016). GtRNAdb 2.0: an expanded database of transfer RNA genes identified in complete and draft genomes.
+              <em>Nucleic Acids Research</em>, 44(D1), D184–D189.
+              <a href="https://doi.org/10.1093/nar/gkv1309" target="_blank" rel="noopener">doi:10.1093/nar/gkv1309</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GitHub Section -->
+    <section class="section">
+      <div class="container">
+        <div class="glass-card fade-in" style="text-align: center; padding: 48px 32px;">
+          <h2 style="margin-bottom: 12px;">Open <span class="gradient-text">Source</span></h2>
+          <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 24px;">
+            The tAIatlas pipeline code and all data files are available on GitHub. Contributions welcome.
+          </p>
+          <a href="https://github.com/taiatlas" class="btn btn-primary" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">
+          © 2024–2025 tAIatlas Project. Open-access scientific resource.
+        </div>
+        <div class="footer-links">
+          <a href="about.html">Methodology</a>
+          <a href="download.html">Data</a>
+          <a href="https://github.com/taiatlas" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

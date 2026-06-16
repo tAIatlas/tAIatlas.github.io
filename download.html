@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Data — tAIatlas</title>
+  <meta name="description" content="Download tAI W_i values for 769 vertebrate species in CSV format. NCBI RefSeq, GtRNAdb, and merged datasets available.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="tAIatlas home">
+        <span class="logo-icon">tAI</span>
+        <span>tAIatlas</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container">
+      <h1><span class="gradient-text">Download Data</span></h1>
+      <p>Access the complete tAI datasets in CSV format for your research. All data is freely available for academic use.</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- Downloads Section -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="downloads-grid">
+
+          <!-- NCBI Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Vertebrate tAI (NCBI RefSeq)
+            </h3>
+            <p>
+              tRNA gene copy numbers and W<sub>i</sub> values derived from NCBI RefSeq genome assemblies, processed through tRNAscan-SE with quality filtering.
+            </p>
+            <div class="file-meta">
+              <span>📊 765 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/vertebrate_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download vertebrate_tai.csv
+            </a>
+          </div>
+
+          <!-- GtRNAdb Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              GtRNAdb Reference Set
+            </h3>
+            <p>
+              W<sub>i</sub> values for 61 model organisms from the Genomic tRNA Database (GtRNAdb), used as a cross-validation reference set.
+            </p>
+            <div class="file-meta">
+              <span>📊 61 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/gtrnadb_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download gtrnadb_tai.csv
+            </a>
+          </div>
+
+          <!-- Merged Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Merged Dataset
+            </h3>
+            <p>
+              Combined dataset integrating both NCBI RefSeq and GtRNAdb sources. For species present in both, GtRNAdb values are used as the curated standard.
+            </p>
+            <div class="file-meta">
+              <span>📊 769 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/merged_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download merged_tai.csv
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Format Documentation -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2>Data <span class="gradient-text">Format</span></h2>
+          <p>All files follow the same CSV structure</p>
+        </div>
+
+        <div class="glass-card fade-in">
+          <div class="doc-section">
+            <h3>Column Structure</h3>
+            <div style="overflow-x: auto;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Column</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>Species</code></td>
+                    <td>Binomial species name (genus + epithet)</td>
+                    <td>Homo sapiens</td>
+                  </tr>
+                  <tr>
+                    <td><code>AAA</code></td>
+                    <td>W<sub>i</sub> weight for the AAA (Lys) codon</td>
+                    <td>12.0</td>
+                  </tr>
+                  <tr>
+                    <td><code>AAC</code></td>
+                    <td>W<sub>i</sub> weight for the AAC (Asn) codon</td>
+                    <td>25.0</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" style="color: var(--text-muted); font-style: italic;">
+                      ... 61 codon columns total (all 61 sense codons, excluding stop codons UAA, UAG, UGA) ...
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>UUU</code></td>
+                    <td>W<sub>i</sub> weight for the UUU (Phe) codon</td>
+                    <td>10.0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="doc-section" style="margin-top: 32px;">
+            <h3>Important Notes</h3>
+            <ul style="color: var(--text-secondary); padding-left: 24px; line-height: 2;">
+              <li>Values represent <strong>raw tRNA gene copy numbers</strong> (W<sub>i</sub>) incorporating wobble base-pairing optimization, not normalized tAI scores</li>
+              <li>To compute tAI for a gene, normalize each W<sub>i</sub> by dividing by max(W<sub>i</sub>), then take the geometric mean across all codons in the coding sequence</li>
+              <li>Codons use <strong>RNA notation</strong> (U instead of T)</li>
+              <li>The three stop codons (UAA, UAG, UGA) are excluded</li>
+              <li>AUG (Met, start codon) is included as it also serves as an internal codon</li>
+              <li>Some values may be fractional due to wobble-pairing weight redistribution</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Citation Section -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2><span class="gradient-text">Citation</span></h2>
+          <p>If you use tAIatlas data in your research, please cite:</p>
+        </div>
+
+        <div class="glass-card fade-in">
+          <div class="citation-box">
+            <p class="citation-title">tAIatlas: A Universal tRNA Adaptation Index Database for Vertebrate Species</p>
+            <p>
+              tAIatlas Project (2025). tAIatlas: A Universal tRNA Adaptation Index Database.
+              Available at: <a href="https://taiatlas.github.io" target="_blank">https://taiatlas.github.io</a>
+            </p>
+          </div>
+
+          <div class="citation-box" style="margin-top: 16px;">
+            <p class="citation-title">Original tAI methodology</p>
+            <p>
+              dos Reis, M., Savva, R., & Wernisch, L. (2004). Solving the riddle of codon usage preferences: a test for translational selection.
+              <em>Nucleic Acids Research</em>, 32(17), 5036–5044.
+              <a href="https://doi.org/10.1093/nar/gkh834" target="_blank" rel="noopener">doi:10.1093/nar/gkh834</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">
+          © 2024–2025 tAIatlas Project. Open-access scientific resource.
+        </div>
+        <div class="footer-links">
+          <a href="about.html">Methodology</a>
+          <a href="download.html">Data</a>
+          <a href="https://github.com/taiatlas" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
