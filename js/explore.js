@@ -15,6 +15,13 @@
   // Default weight type
   let currentWeightType = 'gtai';
 
+  // Clean display name: "Vertebrate (Mammal)" -> "Mammal", "Eukaryote (Other)" -> "Other Eukaryotes"
+  function displayGroupName(g) {
+    if (g.startsWith('Vertebrate (') && g.endsWith(')')) return g.slice(13, -1);
+    if (g === 'Eukaryote (Other)') return 'Other Eukaryotes';
+    return g;
+  }
+
   const tableBody = document.getElementById('species-table-body');
   const filterSelect = document.getElementById('group-filter');
   const searchInput = document.getElementById('species-search');
@@ -59,6 +66,7 @@
           'Archaea'
         ];
 
+
         const groups = Object.keys(data.metadata.groups);
         const orderedGroups = groupOrder.filter(g => groups.includes(g));
         // Add any groups not in our custom order at the end
@@ -68,16 +76,16 @@
         orderedGroups.forEach(g => {
           const opt = document.createElement('option');
           opt.value = g;
-          opt.textContent = `${g} (${data.metadata.groups[g]})`;
+          opt.textContent = `${displayGroupName(g)} (${data.metadata.groups[g]})`;
           filterSelect.appendChild(opt);
           if (g === currentSelection) selectionExists = true;
         });
         
         // Default to Mammals on first load, otherwise preserve selection
-        if (selectionExists) {
+        if (selectionExists && currentSelection) {
           filterSelect.value = currentSelection;
         } else {
-          filterSelect.value = orderedGroups[0] || '';
+          filterSelect.value = 'Vertebrate (Mammal)';
         }
       }
 
@@ -180,7 +188,7 @@
         : `<span style="font-style:italic;">${taiUtils.escapeHtml(s.species)}</span>`;
       return `<tr data-species="${taiUtils.escapeHtml(s.species)}">
         <td class="species-cell">${nameHtml}${warningIcon}</td>
-        <td><span class="group-badge ${groupClass}">${taiUtils.escapeHtml(s.group)}</span></td>
+        <td><span class="group-badge ${groupClass}">${taiUtils.escapeHtml(displayGroupName(s.group))}</span></td>
         <td>${mean}</td>
         <td>${max}</td>
       </tr>`;
@@ -305,7 +313,7 @@
       }
       
       const gc = taiUtils.getGroupClass(rootSpecies.group);
-      titleHtml += `<br><span class="detail-group group-badge ${gc}" style="margin-top: 8px; display: inline-block;">${rootSpecies.group}</span>`;
+      titleHtml += `<br><span class="detail-group group-badge ${gc}" style="margin-top: 8px; display: inline-block;">${displayGroupName(rootSpecies.group)}</span>`;
       
       const isProkaryote = rootSpecies.group === 'Bacteria' || rootSpecies.group === 'Archaea';
       if (activeSpecies.is_incomplete && !isProkaryote) {
