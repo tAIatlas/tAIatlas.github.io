@@ -181,7 +181,7 @@
       const mean = calcMean(s).toFixed(3);
       const max = calcMax(s).toFixed(3);
       const isProkaryote = s.group === 'Bacteria' || s.group === 'Archaea';
-      const warningIcon = (s.is_incomplete && !isProkaryote) ? ' <span title="Note: Missing specific tRNAs (Draft Assembly)" style="cursor: help; color: #ffb703; font-size: 1.0em;">⚠️</span>' : '';
+      const warningIcon = '';
       const cn = commonNames[s.species];
       const nameHtml = cn
         ? `<span style="font-weight:600; color: var(--text-primary);">${taiUtils.escapeHtml(cn)}</span> <span style="font-style:italic; color: var(--text-secondary); font-size:0.85em;">(${taiUtils.escapeHtml(s.species)})</span>`
@@ -416,10 +416,11 @@
        const bars = aaGroups[aa].sort((a, b) => b.val - a.val);
        const barsHtml = bars.map(d => {
          const heightPx = Math.max(2, (d.val / maxVal) * chartHeight);
+         const labelStyle = d.val === 0 ? 'color: #ff4444; font-weight: 800;' : '';
          return `<div class="bar-wrapper">
            <div class="bar-value">${d.val.toFixed(2)}</div>
            <div class="bar" style="height: 2px; background: ${d.color}; box-shadow: 0 0 10px ${d.color}40;" data-height="${heightPx}" title="${d.aa} (${d.codon}): ${d.val.toFixed(3)}"></div>
-           <div class="bar-label">${d.codon}</div>
+           <div class="bar-label" style="${labelStyle}">${d.codon}</div>
          </div>`;
        }).join('');
        
@@ -435,10 +436,11 @@
     const descSorted = [...codonData].sort((a, b) => b.val - a.val);
     const descHtml = descSorted.map(d => {
       const heightPx = Math.max(2, (d.val / maxVal) * chartHeight);
+      const labelStyle = d.val === 0 ? 'color: #ff4444; font-weight: 800;' : '';
       return `<div class="bar-wrapper">
         <div class="bar-value">${d.val.toFixed(2)}</div>
         <div class="bar" style="height: 2px; background: ${d.color}; box-shadow: 0 0 10px ${d.color}40;" data-height="${heightPx}" title="${d.aa} (${d.codon}): ${d.val.toFixed(3)}"></div>
-        <div class="bar-label">${d.codon}</div>
+        <div class="bar-label" style="${labelStyle}">${d.codon}</div>
         <div class="bar-aa-label" style="font-size: 0.65rem; font-weight: 600; color: var(--text-secondary); margin-top: 10px;">${d.aa}</div>
       </div>`;
     }).join('');
