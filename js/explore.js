@@ -319,7 +319,7 @@
       if (activeSpecies.is_incomplete && !isProkaryote) {
         titleHtml += `<div class="incomplete-warning" style="margin-top: 16px; padding: 10px 12px; background: var(--bg-alt); border-left: 3px solid #ffb703; border-radius: 4px; color: var(--text-secondary); font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px;">
           <span style="color: #ffb703; font-size: 1.1rem; line-height: 1;">⚠️</span>
-          <span><strong>Note on Draft Assembly:</strong> This genome is missing explicit tRNA genes for ${activeSpecies.missing_codons.length} codon(s): <span style="font-family: var(--font-mono); color: var(--text-primary);">${activeSpecies.missing_codons.join(', ')}</span>. Relative metrics for these specific codons may be skewed.</span>
+          <span><strong>Note on Draft Assembly:</strong> This genome is <span style="color: #D55E00; font-weight: 600;">missing explicit tRNA</span> genes for ${activeSpecies.missing_codons.length} codon(s): <span style="font-family: var(--font-mono); color: #D55E00; font-weight: 600;">${activeSpecies.missing_codons.join(', ')}</span>. Relative metrics for these specific codons may be skewed.</span>
         </div>`;
       }
 
