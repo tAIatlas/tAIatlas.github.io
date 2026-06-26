@@ -44,13 +44,28 @@
       // Re-populate group filter based on the new dataset
       if (filterSelect) {
         const currentSelection = filterSelect.value;
-        // Keep the first "All Groups" option, clear the rest
-        while (filterSelect.options.length > 1) {
-            filterSelect.remove(1);
-        }
-        const groups = Object.keys(data.metadata.groups).sort();
+        // Clear all options
+        filterSelect.innerHTML = '';
+
+        // Custom order: most complex organisms first
+        const groupOrder = [
+          'Vertebrate (Mammal)',
+          'Vertebrate (Bird)',
+          'Vertebrate (Reptile)',
+          'Vertebrate (Amphibian)',
+          'Vertebrate (Fish)',
+          'Eukaryote (Other)',
+          'Bacteria',
+          'Archaea'
+        ];
+
+        const groups = Object.keys(data.metadata.groups);
+        const orderedGroups = groupOrder.filter(g => groups.includes(g));
+        // Add any groups not in our custom order at the end
+        groups.forEach(g => { if (!orderedGroups.includes(g)) orderedGroups.push(g); });
+
         let selectionExists = false;
-        groups.forEach(g => {
+        orderedGroups.forEach(g => {
           const opt = document.createElement('option');
           opt.value = g;
           opt.textContent = `${g} (${data.metadata.groups[g]})`;
@@ -58,10 +73,11 @@
           if (g === currentSelection) selectionExists = true;
         });
         
-        if (!selectionExists && currentSelection !== '') {
-            filterSelect.value = '';
+        // Default to Mammals on first load, otherwise preserve selection
+        if (selectionExists) {
+          filterSelect.value = currentSelection;
         } else {
-            filterSelect.value = currentSelection;
+          filterSelect.value = orderedGroups[0] || '';
         }
       }
 
