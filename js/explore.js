@@ -9,6 +9,7 @@
   let allSpecies = [];
   let codons = [];
   let filteredSpecies = [];
+  let commonNames = {};
   let sortCol = 'group';
   let sortDir = 'asc';
   // Default weight type
@@ -27,6 +28,15 @@
   async function init() {
     try {
       if (loadingEl) loadingEl.style.display = 'block';
+
+      // Load common names on first call
+      if (Object.keys(commonNames).length === 0) {
+        try {
+          const cnResp = await fetch('data/common_names.json');
+          if (cnResp.ok) commonNames = await cnResp.json();
+        } catch (e) { console.warn('Common names not available:', e); }
+      }
+
       const data = await taiUtils.loadSpeciesData(currentWeightType);
       allSpecies = data.species;
       codons = data.metadata.codons;
@@ -85,7 +95,8 @@
     const group = filterSelect ? filterSelect.value : '';
 
     filteredSpecies = allSpecies.filter(s => {
-      const matchQuery = !query || s.species.toLowerCase().includes(query);
+      const cn = (commonNames[s.species] || '').toLowerCase();
+      const matchQuery = !query || s.species.toLowerCase().includes(query) || cn.includes(query);
       const matchGroup = !group || s.group === group;
       return matchQuery && matchGroup;
     });
@@ -147,8 +158,12 @@
       const max = calcMax(s).toFixed(3);
       const isProkaryote = s.group === 'Bacteria' || s.group === 'Archaea';
       const warningIcon = (s.is_incomplete && !isProkaryote) ? ' <span title="Note: Missing specific tRNAs (Draft Assembly)" style="cursor: help; color: #ffb703; font-size: 1.0em;">⚠️</span>' : '';
+      const cn = commonNames[s.species];
+      const nameHtml = cn
+        ? `<span style="font-weight:600; color: var(--text-primary);">${taiUtils.escapeHtml(cn)}</span> <span style="font-style:italic; color: var(--text-secondary); font-size:0.85em;">(${taiUtils.escapeHtml(s.species)})</span>`
+        : `<span style="font-style:italic;">${taiUtils.escapeHtml(s.species)}</span>`;
       return `<tr data-species="${taiUtils.escapeHtml(s.species)}">
-        <td class="species-cell">${taiUtils.escapeHtml(s.species)}${warningIcon}</td>
+        <td class="species-cell">${nameHtml}${warningIcon}</td>
         <td><span class="group-badge ${groupClass}">${taiUtils.escapeHtml(s.group)}</span></td>
         <td>${mean}</td>
         <td>${max}</td>
@@ -255,7 +270,10 @@
 
     const headerContainer = detailPanel.querySelector('.species-detail-header div');
     if (headerContainer) {
-      let titleHtml = `<h2 style="font-style: italic; display: inline-block; margin-right: 12px; margin-bottom: 0;">${rootSpecies.species}</h2>`;
+      const detailCN = commonNames[rootSpecies.species];
+      let titleHtml = detailCN
+        ? `<h2 style="display: inline-block; margin-right: 12px; margin-bottom: 0;">${detailCN}</h2><span style="font-style: italic; font-size: 1.1rem; color: var(--text-secondary);">${rootSpecies.species}</span>`
+        : `<h2 style="font-style: italic; display: inline-block; margin-right: 12px; margin-bottom: 0;">${rootSpecies.species}</h2>`;
       
       if (rootSpecies.alternates && rootSpecies.alternates.length > 0) {
         titleHtml += `<select id="assembly-select" style="padding: 4px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg-alt); color: var(--text);">`;
