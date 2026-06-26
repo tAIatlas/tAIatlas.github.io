@@ -59,9 +59,9 @@
   if (nav) {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 40) {
-        nav.style.background = 'rgba(6, 10, 20, 0.92)';
+        nav.classList.add('scrolled');
       } else {
-        nav.style.background = 'rgba(6, 10, 20, 0.75)';
+        nav.classList.remove('scrolled');
       }
     }, { passive: true });
   }
@@ -106,17 +106,17 @@
     },
 
     // Load species data (cached)
-    _dataCache: null,
-    async loadSpeciesData() {
-      if (this._dataCache) return this._dataCache;
+    _dataCache: {},
+    async loadSpeciesData(weightType = 'dosreis_dynamic') {
+      if (this._dataCache[weightType]) return this._dataCache[weightType];
       const basePath = window.location.pathname.includes('explore') ||
                        window.location.pathname.includes('download') ||
                        window.location.pathname.includes('about')
                        ? '' : '';
-      const resp = await fetch(`${basePath}data/species_tai.json`);
-      if (!resp.ok) throw new Error('Failed to load species data');
-      this._dataCache = await resp.json();
-      return this._dataCache;
+      const resp = await fetch(`${basePath}data/species_tai_${weightType}.json`);
+      if (!resp.ok) throw new Error(`Failed to load ${weightType} species data`);
+      this._dataCache[weightType] = await resp.json();
+      return this._dataCache[weightType];
     }
   };
 

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>tAIatlas — A Universal tRNA Adaptation Index Database</title>
-  <meta name="description" content="tAIatlas provides tRNA Adaptation Index (tAI) values for 769 vertebrate species across 61 codons. A comprehensive resource for codon usage bias research.">
-  <meta name="keywords" content="tRNA, tAI, codon usage, adaptation index, translation efficiency, vertebrate, genomics">
-  <meta name="author" content="tAIatlas Project">
+  <meta name="description" content="tAIatlas provides tRNA Adaptation Index (tAI) values for 8,722 species across the Tree of Life. A comprehensive resource for codon usage bias research.">
+  <meta name="keywords" content="tRNA, tAI, codon usage, adaptation index, translation efficiency, genomics">
+  <meta name="author" content="Derek L. Thompson & William C. Ray">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -37,7 +37,8 @@
   <!-- Hero Section -->
   <section class="hero" aria-label="Introduction">
     <div class="container">
-      <div class="hero-content">
+      <div class="hero-split">
+        <div class="hero-content">
         <div class="hero-badge">
           <span class="badge-dot"></span>
           Open-access database
@@ -46,7 +47,7 @@
           <span class="gradient-text">tAIatlas</span>
         </h1>
         <p class="hero-tagline">
-          A Universal tRNA Adaptation Index Database — quantifying translational efficiency across 769 vertebrate species and 61 sense codons.
+          A Universal tRNA Adaptation Index Database — quantifying translational efficiency across 8,722 species and 61 sense codons.
         </p>
         <div class="hero-actions">
           <a href="explore.html" class="btn btn-primary">
@@ -80,29 +81,39 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="section" aria-label="Key statistics">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="glass-card stat-card fade-in">
-          <div class="stat-number">769</div>
-          <div class="stat-label">Vertebrate Species</div>
+      <div class="hero-stats">
+        <div class="stats-grid">
+          <div class="glass-card stat-card fade-in" style="display: flex; flex-direction: column; justify-content: center;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">6,996</span>
+              <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); align-self: center;">Bacteria</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">1,292</span>
+              <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); align-self: center;">Eukaryotes</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+              <span style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">434</span>
+              <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); align-self: center;">Archaea</span>
+            </div>
+            <div class="stat-label" style="border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: auto;">3 Domains of Life</div>
+          </div>
+          <div class="glass-card stat-card fade-in" style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
+            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Raw <span style="font-weight: 400; color: var(--text-secondary);">tRNA weights</span></div>
+            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Classic <span style="font-weight: 400; color: var(--text-secondary);">dos Reis weights</span></div>
+            <div style="font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 12px;">Modern <span style="font-weight: 500; color: var(--text-secondary);">gtAI dynamic weights</span></div>
+            <div class="stat-label" style="border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: auto; text-align: center;">Computation Pipelines</div>
+          </div>
+          <div class="glass-card stat-card fade-in">
+            <div class="stat-number">532,042</div>
+            <div class="stat-label">W<sub>i</sub> Values</div>
+          </div>
+          <div class="glass-card stat-card fade-in">
+            <div class="stat-number">QC</div>
+            <div class="stat-label">Dynamic IQR / TadA Capped</div>
+          </div>
         </div>
-        <div class="glass-card stat-card fade-in">
-          <div class="stat-number">61</div>
-          <div class="stat-label">Sense Codons</div>
-        </div>
-        <div class="glass-card stat-card fade-in">
-          <div class="stat-number">46,909</div>
-          <div class="stat-label">W<sub>i</sub> Values</div>
-        </div>
-        <div class="glass-card stat-card fade-in">
-          <div class="stat-number">QC</div>
-          <div class="stat-label">Quality-Filtered tRNAs</div>
-        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -123,7 +134,7 @@
             First formulated by dos Reis et al. (2004), tAI requires knowing the copy number (W<sub>i</sub>) of every tRNA isoacceptor in a genome. These W<sub>i</sub> values incorporate wobble base-pairing rules and isoacceptor redundancy to produce a single per-codon weight.
           </p>
           <p>
-            <strong>tAIatlas</strong> provides pre-computed W<sub>i</sub> values for hundreds of vertebrate species, enabling large-scale comparative studies of translational selection and codon optimization across the vertebrate tree of life.
+            <strong>tAIatlas</strong> provides pre-computed W<sub>i</sub> values for 8,722 species, enabling large-scale comparative studies of translational selection and codon optimization across the entire tree of life.
           </p>
         </div>
         <div class="formula-card glass-card fade-in">
@@ -154,7 +165,7 @@
           <div style="font-size: 2rem; margin-bottom: 12px;">🔬</div>
           <h3>Comprehensive Coverage</h3>
           <p style="color: var(--text-secondary); margin-top: 8px; font-size: 0.9rem;">
-            765 species from NCBI RefSeq + 61 from GtRNAdb. Mammals, birds, fish, reptiles, and amphibians.
+            8,722 species across the Tree of Life. Includes strictly curated Bacterial, Archaeal, and Eukaryotic genomes.
           </p>
         </div>
         <div class="glass-card fade-in" style="text-align: center;">
@@ -180,7 +191,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-text">
-          © 2024–2025 tAIatlas Project. Open-access scientific resource.
+          © 2026 Derek L. Thompson & William C. Ray. Released under the MIT License.
         </div>
         <div class="footer-links">
           <a href="about.html">Methodology</a>

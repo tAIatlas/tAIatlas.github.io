@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="author" content="Derek L. Thompson & William C. Ray">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Download Data — tAIatlas</title>
-  <meta name="description" content="Download tAI W_i values for 769 vertebrate species in CSV format. NCBI RefSeq, GtRNAdb, and merged datasets available.">
+  <meta name="description" content="Download tAI W_i values for 8,722 species across the Tree of Life in CSV and JSON format.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -46,17 +47,97 @@
       <div class="container">
         <div class="downloads-grid">
 
-          <!-- NCBI Dataset -->
+          <!-- Eukaryota Dataset -->
           <div class="glass-card download-card fade-in">
             <h3>
               <span class="file-icon">📄</span>
-              Vertebrate tAI (NCBI RefSeq)
+              Eukaryota tAI (NCBI RefSeq)
             </h3>
             <p>
-              tRNA gene copy numbers and W<sub>i</sub> values derived from NCBI RefSeq genome assemblies, processed through tRNAscan-SE with quality filtering.
+              tRNA gene copy numbers and dynamic gtAI optimality profiles derived from Eukaryotic genome assemblies, processed through tRNAscan-SE and capped with our Interquartile Range (IQR) algorithm to rescue mammalian SINE contamination.
             </p>
             <div class="file-meta">
-              <span>📊 765 species</span>
+              <span>📊 1,292 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/eukaryota_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download eukaryota_tai.csv
+            </a>
+          </div>
+
+          <!-- Bacteria Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Bacteria tAI (NCBI RefSeq)
+            </h3>
+            <p>
+              Bacterial optimality profiles processed with domain-specific wobble constraints, including strictly limiting Inosine editing to the TadA context (tRNA-Arg) and modeling U34 hypermodifications.
+            </p>
+            <div class="file-meta">
+              <span>📊 6,996 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/bacteria_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download bacteria_tai.csv
+            </a>
+          </div>
+
+          <!-- Archaea Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Archaea tAI (NCBI RefSeq)
+            </h3>
+            <p>
+              Archaeal optimality profiles incorporating unique clade-specific modifications such as Agmatidine editing at the Isoleucine wobble position.
+            </p>
+            <div class="file-meta">
+              <span>📊 434 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/archaea_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download archaea_tai.csv
+            </a>
+          </div>
+
+          <!-- Merged Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Full Tree of Life (Merged)
+            </h3>
+            <p>
+              The complete combined dataset of all Eukaryotic, Bacterial, and Archaeal species in a single flat file. Includes raw W<sub>i</sub> metrics and dynamically derived gtAI scaling values.
+            </p>
+            <div class="file-meta">
+              <span>📊 8,722 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 JSON</span>
+            </div>
+            <a href="data/species_tai_gtai.json" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download species_tai_gtai.json
+            </a>
+          </div>
+
+          <!-- Vertebrates Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Vertebrates (NCBI RefSeq)
+            </h3>
+            <p>
+              Highly-curated subset of the vertebrate clade. SINE contamination explicitly capped using the IQR algorithm.
+            </p>
+            <div class="file-meta">
+              <span>📊 578 species</span>
               <span>📐 61 codons</span>
               <span>📁 CSV</span>
             </div>
@@ -66,43 +147,63 @@
             </a>
           </div>
 
-          <!-- GtRNAdb Dataset -->
+          <!-- Mammals Dataset -->
           <div class="glass-card download-card fade-in">
             <h3>
               <span class="file-icon">📄</span>
-              GtRNAdb Reference Set
+              Mammals (NCBI RefSeq)
             </h3>
             <p>
-              W<sub>i</sub> values for 61 model organisms from the Genomic tRNA Database (GtRNAdb), used as a cross-validation reference set.
+              All mammalian genomes in the database, with corrected B1/B2 retrotransposon tRNA inflation.
             </p>
             <div class="file-meta">
-              <span>📊 61 species</span>
+              <span>📊 157 species</span>
               <span>📐 61 codons</span>
               <span>📁 CSV</span>
             </div>
-            <a href="data/gtrnadb_tai.csv" class="btn btn-primary" download>
+            <a href="data/mammals_tai.csv" class="btn btn-primary" download>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download gtrnadb_tai.csv
+              Download mammals_tai.csv
             </a>
           </div>
 
-          <!-- Merged Dataset -->
+          <!-- Birds Dataset -->
           <div class="glass-card download-card fade-in">
             <h3>
               <span class="file-icon">📄</span>
-              Merged Dataset
+              Birds (NCBI RefSeq)
             </h3>
             <p>
-              Combined dataset integrating both NCBI RefSeq and GtRNAdb sources. For species present in both, GtRNAdb values are used as the curated standard.
+              Avian genomes across the RefSeq database.
             </p>
             <div class="file-meta">
-              <span>📊 769 species</span>
+              <span>📊 106 species</span>
               <span>📐 61 codons</span>
               <span>📁 CSV</span>
             </div>
-            <a href="data/merged_tai.csv" class="btn btn-primary" download>
+            <a href="data/birds_tai.csv" class="btn btn-primary" download>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download merged_tai.csv
+              Download birds_tai.csv
+            </a>
+          </div>
+
+          <!-- Fish Dataset -->
+          <div class="glass-card download-card fade-in">
+            <h3>
+              <span class="file-icon">📄</span>
+              Fish (NCBI RefSeq)
+            </h3>
+            <p>
+              Actinopterygii and Chondrichthyes genomes across the database.
+            </p>
+            <div class="file-meta">
+              <span>📊 232 species</span>
+              <span>📐 61 codons</span>
+              <span>📁 CSV</span>
+            </div>
+            <a href="data/fish_tai.csv" class="btn btn-primary" download>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download fish_tai.csv
             </a>
           </div>
 
@@ -186,7 +287,7 @@
 
         <div class="glass-card fade-in">
           <div class="citation-box">
-            <p class="citation-title">tAIatlas: A Universal tRNA Adaptation Index Database for Vertebrate Species</p>
+            <p class="citation-title">tAIatlas: A Universal tRNA Adaptation Index Database</p>
             <p>
               tAIatlas Project (2025). tAIatlas: A Universal tRNA Adaptation Index Database.
               Available at: <a href="https://taiatlas.github.io" target="_blank">https://taiatlas.github.io</a>
@@ -211,7 +312,7 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-text">
-          © 2024–2025 tAIatlas Project. Open-access scientific resource.
+          © 2026 Derek L. Thompson & William C. Ray. Released under the MIT License.
         </div>
         <div class="footer-links">
           <a href="about.html">Methodology</a>

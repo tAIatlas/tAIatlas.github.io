@@ -41,6 +41,39 @@
       color: var(--text-muted);
       font-weight: 400;
     }
+    
+    /* Toggle Switch Styles */
+    .weight-toggle {
+      display: flex;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-right: 16px;
+    }
+    .weight-toggle input[type="radio"] {
+      display: none;
+    }
+    .weight-toggle label {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .weight-toggle input[type="radio"]:checked + label {
+      background: rgba(0, 212, 255, 0.15);
+      color: var(--accent);
+    }
+    .explorer-controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
   </style>
 </head>
 <body>
@@ -68,7 +101,7 @@
   <header class="page-header">
     <div class="container">
       <h1><span class="gradient-text">Species Explorer</span></h1>
-      <p>Search, filter, and visualize tAI profiles for 769 vertebrate species. Click any species to see its full 61-codon bar chart.</p>
+      <p>Search, filter, and visualize tAI profiles for 8,722 species. Click any species to see its full 61-codon bar chart.</p>
     </div>
   </header>
 
@@ -91,9 +124,22 @@
           >
           <div id="search-results" class="search-results" role="listbox" aria-label="Search suggestions"></div>
         </div>
+        
         <select id="group-filter" class="filter-select" aria-label="Filter by taxonomic group">
           <option value="">All Groups</option>
         </select>
+        
+        <div class="weight-toggle" aria-label="Toggle weight algorithm" style="display: flex; gap: 8px; align-items: center; border: none; background: transparent; padding: 0;">
+          <button id="btn-gtai" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;" title="Genetic algorithm optimized weights using Dynamic bounds">gtAI (Dynamic)</button>
+          
+          <select id="select-classical" class="filter-select" style="padding: 10px 40px 10px 20px; font-size: 0.9rem; border-radius: var(--radius-xl);" aria-label="Select Classical tAI algorithm">
+            <option value="" disabled selected hidden>Raw Classic tAI</option>
+            <option value="dosreis_raw">Raw Classic tAI</option>
+            <option value="dosreis_static">Static Classic tAI (Cap=40)</option>
+            <option value="dosreis_dynamic">Dynamic Classic tAI (IQR Bounds)</option>
+          </select>
+        </div>
+
         <span id="species-count" class="species-count"></span>
       </div>
 
@@ -105,7 +151,7 @@
 
       <!-- Table -->
       <div class="table-wrapper glass-card fade-in" style="padding: 0; overflow: hidden;">
-        <div style="max-height: 600px; overflow-y: auto;">
+        <div id="table-scroll-container" style="max-height: 600px; overflow-y: auto; transition: max-height 0.4s ease;">
           <table class="data-table" aria-label="Species tAI data">
             <thead>
               <tr>
@@ -133,23 +179,46 @@
 
         <div id="detail-stats" class="detail-stats-grid"></div>
 
-        <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-secondary);">
-          Codon w<sub>i</sub> Profile (61 sense codons)
-        </h3>
-        <div class="chart-container" id="codon-chart">
-          <!-- Chart rendered by JS -->
+        <div class="chart-section" style="margin-top: 32px;">
+          <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-secondary);">
+            Codon w<sub>i</sub> Profile (Grouped by Amino Acid)
+          </h3>
+          <div class="chart-with-sidebar" style="display: flex; gap: 24px; align-items: flex-start;">
+            <div class="color-legend" style="display: flex; flex-direction: column; gap: 12px; font-size: 0.85rem; color: var(--text-secondary); min-width: 180px; padding: 16px; background: rgba(0, 212, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.08); border-radius: 12px;">
+              <h4 style="margin-top: 0; margin-bottom: 4px; font-size: 0.9rem; color: var(--text-main);">Color Key</h4>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #D55E00; border-radius: 3px;"></span> Acidic (Asp, Glu)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #0072B2; border-radius: 3px;"></span> Basic (Arg, Lys, His)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #56B4E9; border-radius: 3px;"></span> Polar (Asn, Gln)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #E69F00; border-radius: 3px;"></span> Hydroxyl (Ser, Thr)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #F0E442; border-radius: 3px;"></span> Sulfur (Cys, Met)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #009E73; border-radius: 3px;"></span> Aliphatic (Leu, Val, Ile)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #CC79A7; border-radius: 3px;"></span> Aromatic (Phe, Tyr, Trp)</div>
+              <div style="display: flex; align-items: center; gap: 8px;"><span style="display: inline-block; width: 14px; height: 14px; background: #999999; border-radius: 3px;"></span> Special (Gly, Ala, Pro)</div>
+            </div>
+            <div class="chart-container" id="codon-chart-aa" style="flex-grow: 1; min-width: 0;">
+              <!-- Chart rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-section" style="margin-top: 32px;">
+          <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-secondary);">
+            Codon w<sub>i</sub> Profile (Sorted Descending)
+          </h3>
+          <div class="chart-container" id="codon-chart-desc">
+            <!-- Chart rendered by JS -->
+          </div>
         </div>
       </div>
 
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-content">
         <div class="footer-text">
-          © 2024–2025 tAIatlas Project. Open-access scientific resource.
+          © 2026 Derek L. Thompson & William C. Ray. Released under the MIT License.
         </div>
         <div class="footer-links">
           <a href="about.html">Methodology</a>
