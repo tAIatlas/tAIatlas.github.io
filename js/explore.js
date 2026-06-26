@@ -17,7 +17,7 @@
 
   // Clean display name: "Vertebrate (Mammal)" -> "Mammal", "Eukaryote (Other)" -> "Other Eukaryotes"
   function displayGroupName(g) {
-    if (g.startsWith('Vertebrate (') && g.endsWith(')')) return g.slice(13, -1);
+    if (g.startsWith('Vertebrate (') && g.endsWith(')')) return g.slice(12, -1);
     if (g === 'Eukaryote (Other)') return 'Other Eukaryotes';
     return g;
   }
