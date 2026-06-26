@@ -416,7 +416,7 @@
        const bars = aaGroups[aa].sort((a, b) => b.val - a.val);
        const barsHtml = bars.map(d => {
          const heightPx = Math.max(2, (d.val / maxVal) * chartHeight);
-         const labelStyle = d.val === 0 ? 'color: #ff4444; font-weight: 800;' : '';
+         const labelStyle = d.val === 0 ? 'color: #D55E00; font-weight: 800;' : '';
          return `<div class="bar-wrapper">
            <div class="bar-value">${d.val.toFixed(2)}</div>
            <div class="bar" style="height: 2px; background: ${d.color}; box-shadow: 0 0 10px ${d.color}40;" data-height="${heightPx}" title="${d.aa} (${d.codon}): ${d.val.toFixed(3)}"></div>
@@ -436,7 +436,7 @@
     const descSorted = [...codonData].sort((a, b) => b.val - a.val);
     const descHtml = descSorted.map(d => {
       const heightPx = Math.max(2, (d.val / maxVal) * chartHeight);
-      const labelStyle = d.val === 0 ? 'color: #ff4444; font-weight: 800;' : '';
+      const labelStyle = d.val === 0 ? 'color: #D55E00; font-weight: 800;' : '';
       return `<div class="bar-wrapper">
         <div class="bar-value">${d.val.toFixed(2)}</div>
         <div class="bar" style="height: 2px; background: ${d.color}; box-shadow: 0 0 10px ${d.color}40;" data-height="${heightPx}" title="${d.aa} (${d.codon}): ${d.val.toFixed(3)}"></div>
