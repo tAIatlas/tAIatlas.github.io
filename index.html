@@ -19,8 +19,7 @@
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand" aria-label="tAIatlas home">
-        <span class="logo-icon">tAI</span>
-        <span>tAIatlas</span>
+        <span class="logo-icon">tAI</span><span class="logo-text">atlas</span>
       </a>
       <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -134,7 +133,10 @@
             First formulated by dos Reis et al. (2004), tAI requires knowing the copy number (W<sub>i</sub>) of every tRNA isoacceptor in a genome. These W<sub>i</sub> values incorporate wobble base-pairing rules and isoacceptor redundancy to produce a single per-codon weight.
           </p>
           <p>
-            <strong>tAIatlas</strong> provides pre-computed W<sub>i</sub> values for 8,722 species, enabling large-scale comparative studies of translational selection and codon optimization across the entire tree of life.
+            <strong>tAIatlas</strong> provides quality-filtered, ready-to-use pre-computed W<sub>i</sub> values for 8,722 species across the Tree of Life, enabling large-scale comparative studies of translational selection and codon optimization.
+          </p>
+          <p>
+            tRNA gene predictions pass strict tRNAscan-SE quality filters with pseudogenes and low-confidence calls removed. You can download the CSVs or browse interactively without needing to run your own bioinformatics pipeline.
           </p>
         </div>
         <div class="formula-card glass-card fade-in">
@@ -149,38 +151,6 @@
               Where <span style="color: var(--accent); font-family: var(--font-mono);">w<sub>i(k)</sub></span> is the relative adaptiveness weight for the <em>k</em>-th codon, and <span style="color: var(--accent); font-family: var(--font-mono);">l<sub>g</sub></span> is the number of codons in gene <em>g</em>. Each <span style="color: var(--accent); font-family: var(--font-mono);">w<sub>i</sub></span> is computed from tRNA gene copy numbers weighted by codon–anticodon interaction efficiency (wobble pairing rules).
             </p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="section" aria-label="Features">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>Why use <span class="gradient-text">tAIatlas</span>?</h2>
-      </div>
-      <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-        <div class="glass-card fade-in" style="text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">🔬</div>
-          <h3>Comprehensive Coverage</h3>
-          <p style="color: var(--text-secondary); margin-top: 8px; font-size: 0.9rem;">
-            8,722 species across the Tree of Life. Includes strictly curated Bacterial, Archaeal, and Eukaryotic genomes.
-          </p>
-        </div>
-        <div class="glass-card fade-in" style="text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">✅</div>
-          <h3>Quality-Filtered</h3>
-          <p style="color: var(--text-secondary); margin-top: 8px; font-size: 0.9rem;">
-            tRNA gene predictions pass tRNAscan-SE quality filters. Pseudogenes and low-confidence calls removed.
-          </p>
-        </div>
-        <div class="glass-card fade-in" style="text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 12px;">📊</div>
-          <h3>Ready to Use</h3>
-          <p style="color: var(--text-secondary); margin-top: 8px; font-size: 0.9rem;">
-            Pre-computed W<sub>i</sub> values. Download CSV or browse interactively. No bioinformatics pipeline needed.
-          </p>
         </div>
       </div>
     </div>
