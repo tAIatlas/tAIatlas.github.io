@@ -130,11 +130,16 @@
         <div class="weight-toggle" aria-label="Toggle weight algorithm" style="display: flex; gap: 8px; align-items: center; border: none; background: transparent; padding: 0;">
           <button id="btn-gtai" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.9rem;" title="Genetic algorithm optimized weights using Dynamic bounds">gtAI (Dynamic)</button>
           
-          <select id="select-classical" class="filter-select" style="padding: 10px 40px 10px 20px; font-size: 0.9rem; border-radius: var(--radius-xl);" aria-label="Select Classical tAI algorithm">
-            <option value="" disabled selected hidden>Raw Classic tAI</option>
-            <option value="dosreis_raw">Raw Classic tAI</option>
-            <option value="dosreis_static">Static Classic tAI (Cap=40)</option>
-            <option value="dosreis_dynamic">Dynamic Classic tAI (IQR Bounds)</option>
+          <select id="select-classical" class="filter-select" style="padding: 10px 40px 10px 20px; font-size: 0.9rem; border-radius: var(--radius-xl);" aria-label="Select alternative tAI algorithm">
+            <option value="" disabled selected hidden>Alternatives ▾</option>
+            <optgroup label="Anwar gtAI (2023)">
+              <option value="gtai_anwar">Anwar gtAI (Uncapped)</option>
+            </optgroup>
+            <optgroup label="Classical dos Reis tAI (2004)">
+              <option value="dosreis_raw">Raw Classic tAI</option>
+              <option value="dosreis_static">Static Classic tAI (Cap=40)</option>
+              <option value="dosreis_dynamic">Dynamic Classic tAI (IQR Bounds)</option>
+            </optgroup>
           </select>
         </div>
 

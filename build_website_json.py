@@ -185,15 +185,15 @@ def main():
         if dosreis_recs:
             build_json(dosreis_recs, all_codons_strat, os.path.join(data_dir, f'species_tai_dosreis_{strategy}.json'))
 
-    # gtAI: Prokaryotes + Eukaryotes (Computed on Dynamic only)
+    # gtAI (Thompson IQR/Dynamic): Prokaryotes + Eukaryotes from HPC
     gtai_recs = []
     all_codons_gtai = []
     
-    recs, c = read_csv_to_records(os.path.join(pipeline_dir, 'prokaryote_output/prokaryotic_gtai_database.csv'), tax_map, prok_map)
+    recs, c = read_csv_to_records(os.path.join(pipeline_dir, 'prokaryote_output/prokaryotic_gtai_database_hpc.csv'), tax_map, prok_map)
     gtai_recs.extend(recs)
     if c: all_codons_gtai = c
     
-    recs, c = read_csv_to_records(os.path.join(pipeline_dir, 'eukaryotic_gtai_database.csv'), tax_map, prok_map)
+    recs, c = read_csv_to_records(os.path.join(pipeline_dir, 'eukaryotic_gtai_database_hpc.csv'), tax_map, prok_map)
     gtai_recs.extend(recs)
     if c: all_codons_gtai = c
 
@@ -201,6 +201,23 @@ def main():
     gtai_recs.sort(key=lambda x: (x['group'], x['species']))
     if gtai_recs:
         build_json(gtai_recs, all_codons_gtai, os.path.join(data_dir, 'species_tai_gtai.json'))
+
+    # Anwar Raw gtAI (uncapped, generalized eukaryotic wobble rules)
+    anwar_recs = []
+    all_codons_anwar = []
+    
+    recs, c = read_csv_to_records(os.path.join(pipeline_dir, 'prokaryote_output/prokaryotic_gtai_database_anwar_baseline_hpc.csv'), tax_map, prok_map)
+    anwar_recs.extend(recs)
+    if c: all_codons_anwar = c
+    
+    recs, c = read_csv_to_records(os.path.join(pipeline_dir, 'eukaryotic_gtai_anwar_raw_hpc.csv'), tax_map, prok_map)
+    anwar_recs.extend(recs)
+    if c: all_codons_anwar = c
+
+    anwar_recs = aggregate_records(anwar_recs)
+    anwar_recs.sort(key=lambda x: (x['group'], x['species']))
+    if anwar_recs:
+        build_json(anwar_recs, all_codons_anwar, os.path.join(data_dir, 'species_tai_gtai_anwar.json'))
 
 if __name__ == '__main__':
     main()
