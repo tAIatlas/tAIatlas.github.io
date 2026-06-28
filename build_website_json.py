@@ -168,7 +168,7 @@ def main():
     tax_map = load_taxonomy_map(base_dir)
     prok_map = load_prokaryote_map(pipeline_dir)
 
-    for strategy in ['raw', 'static', 'dynamic']:
+    for strategy in ['raw', 'static']:
         dosreis_recs = []
         all_codons_strat = []
         
