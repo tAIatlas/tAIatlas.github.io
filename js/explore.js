@@ -338,7 +338,7 @@
 
     // Show panel
     detailPanel.classList.add('active');
-    detailPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   };
 
   const geneticCode = {

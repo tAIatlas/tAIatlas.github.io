@@ -144,6 +144,11 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
   height: 64px;
 }
 
+.nav-brand:hover {
+  color: inherit;
+  opacity: 0.9;
+}
+
 .nav-brand {
   display: flex;
   align-items: center;
@@ -397,7 +402,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
   background: #ffffff;
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  max-height: 320px;
+  max-height: 160px;
   overflow-y: auto;
   display: none;
   box-shadow: var(--shadow-lg);
