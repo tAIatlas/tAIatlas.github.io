@@ -204,7 +204,7 @@
 
         const container = document.getElementById('table-scroll-container');
         if (container) {
-          container.style.maxHeight = '95px';
+          container.style.maxHeight = '200px';
           setTimeout(() => {
             container.scrollTo({ top: row.offsetTop - 48, behavior: 'smooth' });
           }, 150);
@@ -338,7 +338,7 @@
 
     // Show panel
     detailPanel.classList.add('active');
-    detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // detailPanel.scrollIntoView removed as requested
   };
 
   const geneticCode = {
