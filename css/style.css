@@ -223,10 +223,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 }
 
 .glass-card:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-glass-hover);
-  box-shadow: var(--shadow-glow);
-  /* removed translateY */
+  /* Removed hover effect as requested */
 }
 
 /* --- Buttons --- */
@@ -285,8 +282,9 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 
 .hero-split {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  text-align: center;
   gap: 60px;
 }
 
@@ -295,12 +293,14 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 }
 
 .hero-stats .stats-grid {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
 }
 
 .hero-content {
-  flex: 1;
-  max-width: 600px;
+  width: 100%;
+  max-width: 900px;
   position: relative;
   z-index: 1;
 }
@@ -343,14 +343,14 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 .hero-actions {
   display: flex;
   gap: 16px;
-  flex-wrap: wrap;
-  animation: fadeInUp 0.8s ease 0.3s both;
+  justify-content: center;
+  margin-bottom: 32px;
 }
 
 /* --- Hero Search --- */
 .hero-search {
-  margin-top: 40px;
-  animation: fadeInUp 0.8s ease 0.4s both;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .search-container {
@@ -1082,19 +1082,25 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
   }
 
   .hero-content {
-    text-align: center;
-  }
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+}
 
   .hero-actions {
-    justify-content: center;
-  }
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
 
   .about-tai-grid,
   .methodology-grid {
     grid-template-columns: 1fr;
   }
 
-  .stats-grid {
+  .stats-grid, .hero-stats .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -1126,14 +1132,16 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 }
 
 @media (max-width: 480px) {
-  .stats-grid {
+  .stats-grid, .hero-stats .stats-grid {
     grid-template-columns: 1fr;
   }
 
   .hero-actions {
-    flex-direction: column;
-    align-items: center;
-  }
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
 
   .stat-number {
     font-size: 2rem;
