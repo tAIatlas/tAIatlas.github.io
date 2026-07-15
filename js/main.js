@@ -103,14 +103,16 @@
         'Amphibian': 'amphibian',
         'Plant': 'plant',
         'Fungi': 'fungi',
-        'Invertebrate': 'invertebrate'
+        'Invertebrate': 'invertebrate',
+        'Bacteria': 'bacteria',
+        'Archaea': 'archaea'
       };
       return map[group] || 'other';
     },
 
     // Load species data (cached)
     _dataCache: {},
-    async loadSpeciesData(weightType = 'gtai') {
+    async loadSpeciesData(weightType = 'ktai') {
       if (this._dataCache[weightType]) return this._dataCache[weightType];
       const basePath = window.location.pathname.includes('explore') ||
                        window.location.pathname.includes('download') ||

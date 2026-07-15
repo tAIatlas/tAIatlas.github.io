@@ -657,6 +657,8 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 .group-badge.plant { background: rgba(100, 214, 116, 0.12); color: #64d674; }
 .group-badge.fungi { background: rgba(214, 148, 100, 0.12); color: #d69464; }
 .group-badge.invertebrate { background: rgba(214, 100, 166, 0.12); color: #d664a6; }
+.group-badge.bacteria { background: rgba(106, 76, 147, 0.12); color: #6a4c93; }
+.group-badge.archaea { background: rgba(255, 140, 0, 0.12); color: #ff8c00; }
 .group-badge.other { background: rgba(139, 149, 168, 0.12); color: #8b95a8; }
 
 /* --- Species Detail Panel --- */

@@ -219,5 +219,12 @@ def main():
     if anwar_recs:
         build_json(anwar_recs, all_codons_anwar, os.path.join(data_dir, 'species_tai_gtai_anwar.json'))
 
+    # ktAI (Thompson K-means universal models)
+    ktai_recs, all_codons_ktai = read_csv_to_records(os.path.join(pipeline_dir, 'ktai_database.csv'), tax_map, prok_map)
+    ktai_recs = aggregate_records(ktai_recs)
+    ktai_recs.sort(key=lambda x: (x['group'], x['species']))
+    if ktai_recs:
+        build_json(ktai_recs, all_codons_ktai, os.path.join(data_dir, 'species_tai_ktai.json'))
+
 if __name__ == '__main__':
     main()

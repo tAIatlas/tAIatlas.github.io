@@ -151,14 +151,14 @@
               <div class="step-number">5</div>
               <div class="step-content">
                 <h4>Dynamic QC & Capping</h4>
-                <p>Detect and truncate severe SINE retrotransposon contamination (frequent in mammalian genomes) using a strict Interquartile Range (IQR) saturation limit to prevent mathematical artifacting.</p>
+                <p>Detect and truncate severe SINE retrotransposon contamination (frequent in mammalian genomes) using Michaelis-Menten saturation kinetics. This biologically-grounded approach caps maximum ribosomal efficiency and prevents mathematical artifacting from ultra-abundant tRNAs.</p>
               </div>
             </div>
             <div class="step-card">
               <div class="step-number">6</div>
               <div class="step-content">
-                <h4>gtAI Optimization</h4>
-                <p>Deploy domain-specific genetic algorithms to refine classical dos Reis penalty assumptions (e.g. restricting Inosine editing to TadA in bacteria). Final dataset: 8,722 species × 61 codons.</p>
+                <h4>ktAI Optimization</h4>
+                <p>Deploy domain-specific Differential Evolution algorithms to optimize universal codon weights directly against empirical protein abundance, bypassing tRNA gene copy counts. Final dataset: 8,722 species × 61 codons.</p>
               </div>
             </div>
           </div>
@@ -179,7 +179,7 @@
               Our analysis revealed that classical uncorrected pipelines routinely overestimate tRNA abundance in Mammals due to SINE retrotransposon contamination (e.g. Alu/B2 elements), and miscalculate Bacterial translation by generalizing Eukaryotic A &rarr; I wobble rules.
             </p>
             <p style="color: var(--text-secondary);">
-              <strong>tAIatlas</strong> rectifies these critical issues by strictly enforcing species-specific TadA constraints and dynamically capping SINE inflation via a novel Interquartile Range (IQR) algorithm, restoring biological accuracy across all domains.
+              <strong>tAIatlas</strong> rectifies these critical issues by strictly enforcing species-specific TadA constraints and dynamically capping SINE inflation via biologically-grounded Michaelis-Menten saturation kinetics, restoring biological accuracy across all domains.
             </p>
           </div>
 
@@ -194,10 +194,9 @@
                 </p>
               </div>
               <div style="padding: 16px; border-radius: 12px; background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.08);">
-                <h4 style="margin-bottom: 4px;">gtAI Architecture</h4>
+                <h4 style="margin-bottom: 4px;">ktAI Architecture</h4>
                 <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                  Machine learning / genetic algorithms for optimized S-values (Anwar et al. 2023).
-                  <br><a href="https://doi.org/10.3389/fmolb.2023.1218518" target="_blank" rel="noopener">doi.org/10.3389/fmolb.2023.1218518</a>
+                  Differential Evolution algorithms for optimized universal weights directly mapping CDS to abundance.
                 </p>
               </div>
               <div style="padding: 16px; border-radius: 12px; background: rgba(0,212,255,0.03); border: 1px solid rgba(0,212,255,0.08);">
@@ -245,7 +244,7 @@
             <li style="margin-bottom: 12px;">dos Reis, M., Savva, R. and Wernisch, L. (2004) Solving the riddle of codon usage preferences: a test for translational selection. <em>Nucleic Acids Res.</em>, <strong>32</strong>, 5036–5044.</li>
             <li style="margin-bottom: 12px;">Chan, P.P. and Lowe, T.M. (2016) GtRNAdb 2.0: an expanded database of transfer RNA genes identified in complete and draft genomes. <em>Nucleic Acids Res.</em>, <strong>44</strong>, D184–D189.</li>
             <li style="margin-bottom: 12px;">Yoon, J., Chung, Y.J. and Lee, M. (2018) STADIUM: Species-Specific tRNA Adaptive Index Compendium. <em>Genomics Inform.</em>, <strong>16</strong>, e28.</li>
-            <li style="margin-bottom: 12px;">Anwar, A.M., Khodary, S.M., Ahmed, E.A., Osama, A., Ezzeldin, S., Tanios, A., Mahgoub, S. and Magdeldin, S. (2023) gtAI: an improved species-specific tRNA adaptation index using the genetic algorithm. <em>Front. Mol. Biosci.</em>, <strong>10</strong>, 1218518.</li>
+            <li style="margin-bottom: 12px;">Thompson, D.L., Ray, W.C. (2026) ktAI: A Universal Kinetic tRNA Adaptation Index. <em>Under Review</em>.</li>
             <li style="margin-bottom: 12px;">Nawrocki, E.P. and Eddy, S.R. (2013) Infernal 1.1: 100-fold faster RNA homology searches. <em>Bioinformatics</em>, <strong>29</strong>, 2933–2935.</li>
             <li style="margin-bottom: 12px;">Chan, P.P., Lin, B.Y., Mak, A.J. and Lowe, T.M. (2021) tRNAscan-SE 2.0: improved detection and functional classification of transfer RNA genes. <em>Nucleic Acids Res.</em>, <strong>49</strong>, 9077–9096.</li>
             <li style="margin-bottom: 12px;">Wolf, J., Gerber, A.P. and Keller, W. (2002) tadA, an essential tRNA-specific adenosine deaminase from Escherichia coli. <em>EMBO J.</em>, <strong>21</strong>, 3841–3851.</li>
