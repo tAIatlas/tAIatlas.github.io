@@ -12,15 +12,22 @@
   if (!searchInput || !searchResults) return;
 
   let speciesList = [];
+  let commonNames = {};
   let selectedIndex = -1;
 
   // Load data
   async function init() {
     try {
+      try {
+        const cnResp = await fetch('data/common_names.json');
+        if (cnResp.ok) commonNames = await cnResp.json();
+      } catch (e) { console.warn('Common names not available:', e); }
+
       const data = await taiUtils.loadSpeciesData();
       speciesList = data.species.map(s => ({
         name: s.species,
-        group: s.group
+        group: s.group,
+        common: commonNames[s.species] || ''
       }));
     } catch (err) {
       console.error('Failed to load species data for search:', err);
@@ -37,9 +44,12 @@
     selectedIndex = -1;
     const html = results.slice(0, 12).map((item, i) => {
       const groupClass = taiUtils.getGroupClass(item.group);
-      const highlighted = taiUtils.highlightMatch(item.name, query);
+      const highlightedName = taiUtils.highlightMatch(item.name, query);
+      const displayName = item.common 
+        ? `<span style="font-weight:600; color:var(--text-primary);">${taiUtils.highlightMatch(item.common, query)}</span> <span style="font-size:0.85em; font-style:italic; color:var(--text-secondary);">(${highlightedName})</span>`
+        : highlightedName;
       return `<div class="search-result-item" data-index="${i}" data-species="${taiUtils.escapeHtml(item.name)}" role="option">
-        <span class="species-name">${highlighted}</span>
+        <span class="species-name">${displayName}</span>
         <span class="species-group group-badge ${groupClass}">${taiUtils.escapeHtml(item.group)}</span>
       </div>`;
     }).join('');
@@ -79,9 +89,10 @@
     const contains = [];
     for (const item of speciesList) {
       const nameLower = item.name.toLowerCase();
-      if (nameLower.startsWith(lower)) {
+      const commonLower = item.common.toLowerCase();
+      if (nameLower.startsWith(lower) || commonLower.startsWith(lower)) {
         starts.push(item);
-      } else if (nameLower.includes(lower)) {
+      } else if (nameLower.includes(lower) || commonLower.includes(lower)) {
         contains.push(item);
       }
     }
