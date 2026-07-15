@@ -108,10 +108,14 @@
       e.preventDefault();
       selectedIndex = Math.max(selectedIndex - 1, 0);
       updateSelected(items);
-    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+    } else if (e.key === 'Enter') {
       e.preventDefault();
-      const species = items[selectedIndex].dataset.species;
-      navigateToSpecies(species);
+      // If nothing is selected but results exist, pick the first one
+      const indexToSelect = selectedIndex >= 0 ? selectedIndex : 0;
+      if (items[indexToSelect]) {
+        const species = items[indexToSelect].dataset.species;
+        navigateToSpecies(species);
+      }
     } else if (e.key === 'Escape') {
       searchResults.classList.remove('active');
     }
