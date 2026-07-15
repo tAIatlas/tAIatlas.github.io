@@ -107,13 +107,15 @@
 
     // Load species data (cached)
     _dataCache: {},
-    async loadSpeciesData(weightType = 'dosreis_dynamic') {
+    async loadSpeciesData(weightType = 'gtai') {
       if (this._dataCache[weightType]) return this._dataCache[weightType];
       const basePath = window.location.pathname.includes('explore') ||
                        window.location.pathname.includes('download') ||
                        window.location.pathname.includes('about')
                        ? '' : '';
-      const resp = await fetch(`${basePath}data/species_tai_${weightType}.json`);
+      // If weightType is empty, load the default species_tai.json
+      const fileName = weightType ? `species_tai_${weightType}.json` : `species_tai.json`;
+      const resp = await fetch(`${basePath}data/${fileName}`);
       if (!resp.ok) throw new Error(`Failed to load ${weightType} species data`);
       this._dataCache[weightType] = await resp.json();
       return this._dataCache[weightType];
