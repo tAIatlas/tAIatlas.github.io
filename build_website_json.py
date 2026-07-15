@@ -4,11 +4,18 @@ import json
 import os
 
 def load_taxonomy_map(base_dir):
+    tax_map = {}
     taxonomy_path = os.path.join(base_dir, 'genus_taxonomy.json')
     if os.path.exists(taxonomy_path):
         with open(taxonomy_path, 'r') as f:
-            return json.load(f)
-    return {}
+            tax_map.update(json.load(f))
+    
+    euk_path = os.path.join(base_dir, 'data', 'eukaryote_genus_map.json')
+    if os.path.exists(euk_path):
+        with open(euk_path, 'r') as f:
+            tax_map.update(json.load(f))
+            
+    return tax_map
 
 def load_prokaryote_map(pipeline_dir):
     prok_map = {}
@@ -37,6 +44,8 @@ def infer_taxonomic_group(species_name, taxonomy_map, prok_map):
     if genus in taxonomy_map:
         cls = taxonomy_map[genus]
         if cls != 'Unknown':
+            if cls in ['Plant', 'Fungi', 'Invertebrate']:
+                return cls
             return f"Vertebrate ({cls})"
     return 'Eukaryote (Other)'
 
