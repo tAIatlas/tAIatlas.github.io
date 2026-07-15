@@ -18,7 +18,7 @@
   // Clean display name: "Vertebrate (Mammal)" -> "Mammal", "Eukaryote (Other)" -> "Other Eukaryotes"
   function displayGroupName(g) {
     if (g.startsWith('Vertebrate (') && g.endsWith(')')) return g.slice(12, -1);
-    if (g === 'Eukaryote (Other)') return 'Other Eukaryotes';
+    if (g === 'Eukaryote (Other)' || g === 'Other Eukaryote') return 'Other Eukaryotes';
     return g;
   }
 
@@ -56,12 +56,15 @@
 
         // Custom order: most complex organisms first
         const groupOrder = [
-          'Vertebrate (Mammal)',
-          'Vertebrate (Bird)',
-          'Vertebrate (Reptile)',
-          'Vertebrate (Amphibian)',
-          'Vertebrate (Fish)',
-          'Eukaryote (Other)',
+          'Mammal',
+          'Bird',
+          'Reptile',
+          'Amphibian',
+          'Fish',
+          'Invertebrate',
+          'Plant',
+          'Fungi',
+          'Other Eukaryote',
           'Bacteria',
           'Archaea'
         ];

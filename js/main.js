@@ -100,7 +100,10 @@
         'Bird': 'bird',
         'Fish': 'fish',
         'Reptile': 'reptile',
-        'Amphibian': 'amphibian'
+        'Amphibian': 'amphibian',
+        'Plant': 'plant',
+        'Fungi': 'fungi',
+        'Invertebrate': 'invertebrate'
       };
       return map[group] || 'other';
     },

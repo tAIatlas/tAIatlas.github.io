@@ -654,6 +654,9 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
 .group-badge.fish { background: rgba(72, 191, 227, 0.12); color: #48bfe3; }
 .group-badge.reptile { background: rgba(6, 214, 160, 0.12); color: #06d6a0; }
 .group-badge.amphibian { background: rgba(188, 143, 255, 0.12); color: #bc8fff; }
+.group-badge.plant { background: rgba(100, 214, 116, 0.12); color: #64d674; }
+.group-badge.fungi { background: rgba(214, 148, 100, 0.12); color: #d69464; }
+.group-badge.invertebrate { background: rgba(214, 100, 166, 0.12); color: #d664a6; }
 .group-badge.other { background: rgba(139, 149, 168, 0.12); color: #8b95a8; }
 
 /* --- Species Detail Panel --- */
