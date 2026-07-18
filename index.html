@@ -80,84 +80,16 @@
           </div>
         </div>
       </div>
-      <div class="hero-stats">
-        <div class="stats-grid">
-          <div class="glass-card stat-card fade-in" style="display: flex; flex-direction: column; justify-content: center;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-              <span style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">6,996</span>
-              <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); align-self: center;">Bacteria</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-              <span style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">1,292</span>
-              <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); align-self: center;">Eukaryotes</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-              <span style="font-size: 1.3rem; font-weight: 800; color: var(--accent);">434</span>
-              <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); align-self: center;">Archaea</span>
-            </div>
-            <div class="stat-label" style="border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: auto;">3 Domains of Life</div>
-          </div>
-          <div class="glass-card stat-card fade-in" style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
-            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Raw <span style="font-weight: 400; color: var(--text-secondary);">tRNA weights</span></div>
-            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Classic <span style="font-weight: 400; color: var(--text-secondary);">dos Reis weights</span></div>
-            <div style="font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 12px;">Modern <span style="font-weight: 500; color: var(--text-secondary);">ktAI universal weights</span></div>
-            <div class="stat-label" style="border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: auto; text-align: center;">Computation Pipelines</div>
-          </div>
-          <div class="glass-card stat-card fade-in" style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
-            <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-bottom: 4px; line-height: 1.1;">532,042</div>
-            <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Total Pre-computed w<sub>i</sub> Scores</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: auto;">Spanning all 61 sense codons across 8,722 species. Normalized and ready for immediate download.</div>
-          </div>
-          <div class="glass-card stat-card fade-in" style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
-            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;"><span style="color: var(--accent);">✓</span> Strict Infernal Bit-Score QC</div>
-            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;"><span style="color: var(--accent);">✓</span> MM-Kinetics Capped</div>
-            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;"><span style="color: var(--accent);">✓</span> ML-Optimized via PaxDB</div>
-            <div class="stat-label" style="border-top: 1px solid var(--border-glass); padding-top: 12px; margin-top: auto; text-align: center;">Validation & Filtering</div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
   </section>
 
-  <!-- What is tAI Section -->
-  <section class="section" aria-label="About tAI">
-    <div class="container">
-      <div class="section-header fade-in">
-        <h2>What is the <span class="gradient-text">tRNA Adaptation Index</span>?</h2>
-        <p>A metric for quantifying how well a gene's codon usage matches the tRNA pool of its host organism.</p>
-      </div>
-      <div class="about-tai-grid">
-        <div class="about-tai-text fade-in">
-          <p>
-            The <strong>tRNA Adaptation Index (tAI)</strong> measures how efficiently a coding sequence can be translated given the tRNA availability in a cell. Higher tAI values indicate codons decoded by more abundant tRNAs — predicting faster, more accurate translation.
-          </p>
-          <p>
-            First formulated by dos Reis et al. (2004), tAI requires knowing the copy number (W<sub>i</sub>) of every tRNA isoacceptor in a genome. These W<sub>i</sub> values incorporate wobble base-pairing rules and isoacceptor redundancy to produce a single per-codon weight.
-          </p>
-          <p>
-            <strong>tAIatlas</strong> provides quality-filtered, ready-to-use pre-computed W<sub>i</sub> values for 8,722 species across the Tree of Life, enabling large-scale comparative studies of translational selection and codon optimization.
-          </p>
-          <p>
-            tRNA gene predictions pass strict tRNAscan-SE quality filters with pseudogenes and low-confidence calls removed. You can download the CSVs or browse interactively without needing to run your own bioinformatics pipeline.
-          </p>
-        </div>
-        <div class="formula-card glass-card fade-in">
-          <div class="formula">
-            tAI<sub>g</sub> = (∏<sub>k=1</sub><sup>l<sub>g</sub></sup> w<sub>i(k)</sub>)<sup>1/l<sub>g</sub></sup>
-          </div>
-          <div class="formula-label">
-            Geometric mean of codon weights — dos Reis et al. (2004)
-          </div>
-          <div style="margin-top: 20px; text-align: left;">
-            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8;">
-              Where <span style="color: var(--accent); font-family: var(--font-mono);">w<sub>i(k)</sub></span> is the relative adaptiveness weight for the <em>k</em>-th codon, and <span style="color: var(--accent); font-family: var(--font-mono);">l<sub>g</sub></span> is the number of codons in gene <em>g</em>. Each <span style="color: var(--accent); font-family: var(--font-mono);">w<sub>i</sub></span> is computed from tRNA gene copy numbers weighted by codon–anticodon interaction efficiency (wobble pairing rules).
-            </p>
-          </div>
-        </div>
-      </div>
+  <main class="section" style="padding-top: 40px; min-height: 20vh; display: flex; align-items: center; justify-content: center;">
+    <div class="container" style="text-align: center;">
+      <h2><span class="gradient-text">Coming Soon</span></h2>
+      <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 10px;">We're currently making updates to tAIatlas. Please check back later.</p>
     </div>
-  </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer" role="contentinfo">
